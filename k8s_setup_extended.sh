@@ -1,12 +1,15 @@
 #!/bin/bash
 # create  github personal key https://github.com/settings/tokens
 
-echo "Please input the github personal key => https://github.com/settings/tokens"
+
+#github profile name
+echo "Please input the github username"
+read USERNAME
+
+echo "Please input your Personal access tokens (classic) => https://github.com/settings/tokens"
 read CR_PAT
 
 #CR_PAT=""
-#github profile name
-USERNAME={github username}
 #app settings
 APP_NAME=cloud-app
 APP_VER=0.0.1
@@ -17,7 +20,7 @@ echo "1. Login to github docker registry (packages)"
 echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 echo "==========================================="
 
-echo "2. Building Docker Image from Debian Bookworm"
+echo "2. Building Docker Image from Dockerfile"
 docker build -t $APP_NAME:$APP_VER -f Dockerfile .
 echo "Docker image built successfully."
 echo "==========================================="
