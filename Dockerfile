@@ -4,7 +4,7 @@ COPY app/ /usr/src/app
 WORKDIR /usr/src/app
 
 # Build the application
-#RUN ./gradlew bootJar
+RUN ./gradlew bootJar
 
 # Stage 2 run only the java app in a new image
 FROM openjdk:22-slim as app_snapshot
