@@ -1,6 +1,4 @@
 #!/bin/bash
-# create  github personal key https://github.com/settings/tokens
-
 
 #github profile name
 echo "Please input the github username"
@@ -9,7 +7,6 @@ read USERNAME
 echo "Please input your Personal access tokens (classic) => https://github.com/settings/tokens"
 read CR_PAT
 
-#CR_PAT=""
 #app settings
 APP_NAME=cloud-app
 APP_VER=0.0.1
@@ -30,7 +27,7 @@ docker run -d -p 8080:8080 $APP_NAME:$APP_VER
 echo "The application is running in the Docker container at http://localhost:8080"
 echo "==========================================="
 
-echo "4. Publishing Docker Image to a Docker Registry"
+echo "4. Publishing Docker Image to Github's Docker Registry"
 docker tag $APP_NAME:$APP_VER ghcr.io/$USERNAME/$APP_NAME:$APP_VER
 docker push ghcr.io/$USERNAME/$APP_NAME:$APP_VER
 echo "Docker image published to Docker registry."
