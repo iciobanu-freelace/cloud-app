@@ -18,20 +18,36 @@ echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 echo "==========================================="
 
 echo "2. Building Docker Image from Dockerfile"
+
 docker build -t $APP_NAME:$APP_VER -f Dockerfile .
+
 echo "Docker image built successfully."
 echo "==========================================="
 
-echo "3. Running Docker Container"
-docker run -d -p 8080:8080 $APP_NAME:$APP_VER
+echo "3. Removing previous docker if exists"
+
+docker rm $APP_NAME -f
+
+echo "==========================================="
+echo "4. Running Docker Container"
+
+docker run -d -p 8080:8080 --name $APP_NAME $APP_NAME:$APP_VER
+
 echo "The application is running in the Docker container at http://localhost:8080"
 echo "==========================================="
 
-echo "4. Publishing Docker Image to Github's Docker Registry"
+#View all running docker containers
+echo "View all running containers"
+echo "==========================================="
+
+docker ps
+
+echo "5. Publishing Docker Image to Github's Docker Registry"
 docker tag $APP_NAME:$APP_VER ghcr.io/$USERNAME/$APP_NAME:$APP_VER
 docker push ghcr.io/$USERNAME/$APP_NAME:$APP_VER
 echo "Docker image published to Docker registry."
 echo "==========================================="
+
 
 #echo "Deploying Docker Image to a Kubernetes Cluster"
 #kubectl create deployment cloud-app --image=your-docker-repo/cloud-app:0.0.1
